@@ -5,9 +5,9 @@
 
 This open source project is being created to demonstrate my full-stack programming skills, and usage of different technology stacks. The project involves creating a locations directory for the country Guinea, using data from Open Street Maps, to be consumed by the end-user via a webapp with pleasant UI interface. 
 
-Languages being utilised: Python, Java, & JavaScript
-Frameworks being utilised: Spring Boot, React/Next.Js, & Tailwind
-Other Tools to use: MySQL (SQL), & Docker
+* _Languages being utilised:_ Python, Java, & JavaScript
+* _Frameworks being utilised:_ Spring Boot, React/Next.Js, & Tailwind
+* _Other Tools to use:_ MySQL (SQL), & Docker
 
 ### Breakdown
 The project is comprised of 3 parts:

@@ -1,4 +1,9 @@
 import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const Map = dynamic(() => import("../components/Map"), {
+  ssr: false,
+});
 
 function LocationsListing() {
   //Temporary data
@@ -101,7 +106,7 @@ function LocationsListing() {
         </div>
 
         <div class="w-full xl:w-1/2 bg-slate-300">
-          <h1>TODO: Add map in this div section</h1>
+          <Map />
         </div>
       </section>
 

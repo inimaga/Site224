@@ -5,46 +5,16 @@ const Map = dynamic(() => import("../components/Map"), {
   ssr: false,
 });
 
-function LocationsListing() {
-  //Temporary data
-  const dummyData_location_list = [
-    {
-      name: 'Ambassade de la Republique federale d\'Allemagne',
-      parentCategory: 'Administration',
-      category: "Embassy",
-      city: 'Conakry',
-      latitude: '9.5122736',
-      longitude: '-13.7160043',
-      verified: false,
-    },
-    {
-      name: 'Ambassade de Palestine',
-      parentCategory: 'Administration',
-      category: "Embassy",
-      city: 'Conakry',
-      latitude: '9.5118561',
-      longitude: '-13.7160678',
-      verified: false,
-    },
-    {
-      name: 'Institut Nako Diabaté',
-      parentCategory: 'Education',
-      category: "College",
-      city: 'Conakry',
-      latitude: '9.621789791',
-      longitude: '-13.58247561',
-      verified: false,
-    },
-    {
-      name: 'Bicigui',
-      parentCategory: 'Financial Services',
-      category: "Atm",
-      city: 'Conakry',
-      latitude: '9.5756926',
-      longitude: '-13.6205087',
-      verified: false,
-    }
-  ]
+export const getStaticProps = async () => {
+  const res = await fetch("http://localhost:8080/locations/conakry");
+  const data = await res.json();
+
+  return {
+    props: { locations: data },
+  };
+};
+
+function LocationsListing( { locations } ) {
 
   return (
     <>
@@ -66,37 +36,37 @@ function LocationsListing() {
 
       </section>
 
-      <section class="flex flex-col w-ful xl:flex-row">
-        <div class="w-full xl:w-1/2 ">
+      <section className="flex flex-col w-ful xl:flex-row">
+        <div className="w-full xl:w-1/2 ">
 
-          {dummyData_location_list.map((item, index) => (
-            <div key={item.name} class="px-6 py-6 mb-6 mx-10 my-10 lg:pl-12 lg:pr-6 bg-white border border-gray-200 rounded-lg hover:shadow ease">
-              <div class="flex flex-col justify-between lg:flex-row">
+          {locations.map((item, index) => (
+            <div key={item.name} className="px-6 py-6 mb-6 mx-10 my-10 lg:pl-12 lg:pr-6 bg-white border border-gray-200 rounded-lg hover:shadow ease">
+              <div className="flex flex-col justify-between lg:flex-row">
 
-                <div class="w-full px-4 mb-4 lg:w-7/12 xl:w-8/12 lg:mb-0">
-                  <h3 class="text-xl font-bold text-gray-700 text-center">{item.name}</h3>
+                <div className="w-full px-4 mb-4 lg:w-7/12 xl:w-8/12 lg:mb-0">
+                  <h3 className="text-xl font-bold text-gray-700 text-center">{item.name}</h3>
 
-                  <ul class="flex flex-wrap text-base text-left lg:text-lg mt-6">
-                    <li class="flex items-center w-full mb-4 sm:w-1/2">
+                  <ul className="flex flex-wrap text-base text-left lg:text-lg mt-6">
+                    <li className="flex items-center w-full mb-4 sm:w-1/2">
 
-                      <Image class="mr-2" src="/assets/imgs/Category.svg" width={30} height={30} alt="Category" />
-                      <p class="font-normal">{item.parentCategory}</p>
+                      <Image className="mr-2" src="/assets/imgs/Category.svg" width={30} height={30} alt="Category" />
+                      <p className="font-normal">{item.parentCategory}</p>
                     </li>
-                    <li class="flex items-center w-full mb-4 sm:w-1/2">
-                      <Image class="mr-2" src="/assets/imgs/Type.svg" width={30} height={30} alt="Type" />
-                      <p class="font-normal">{item.category}</p>
+                    <li className="flex items-center w-full mb-4 sm:w-1/2">
+                      <Image className="mr-2" src="/assets/imgs/Type.svg" width={30} height={30} alt="Type" />
+                      <p className="font-normal">{item.category}</p>
                     </li>
-                    <li class="flex items-center w-full mb-4 sm:w-1/2">
-                      <Image class="mr-2" src="/assets/imgs/location.svg" width={30} height={30} alt="Location" />
-                      <p class="font-normal">{item.city}</p>
+                    <li className="flex items-center w-full mb-4 sm:w-1/2">
+                      <Image className="mr-2" src="/assets/imgs/location.svg" width={30} height={30} alt="Location" />
+                      <p className="font-normal">{item.city}</p>
                     </li>
-                    <li class="flex items-center w-full mb-4 sm:w-1/2">
-                      <p class="font-normal text-gray-600">Location verified? : {item.verified ? "True" : "False"} </p>
+                    <li className="flex items-center w-full mb-4 sm:w-1/2">
+                      <p className="font-normal text-gray-600">Location verified? : {item.verified ? "True" : "False"} </p>
                     </li>
                   </ul>
                 </div>
-                <div class="w-full px-4 lg:w-5/12 2xl:w-4/12">
-                  <div class="h-full p-12 text-center bg-[grey] rounded-xl" style={{ backgroundImage: `url('/assets/imgs/Placeholder2.png')`, backgroundSize: "cover", backgroundPosition: "center" }}>
+                <div className="w-full px-4 lg:w-5/12 2xl:w-4/12">
+                  <div className="h-full p-12 text-center bg-[grey] rounded-xl" style={{ backgroundImage: `url('/assets/imgs/Placeholder2.png')`, backgroundSize: "cover", backgroundPosition: "center" }}>
                   </div>
                 </div>
               </div>
@@ -105,8 +75,8 @@ function LocationsListing() {
           ))}
         </div>
 
-        <div class="w-full xl:w-1/2 bg-slate-300">
-          <Map />
+        <div className="w-full xl:w-1/2 bg-slate-300">
+          <Map locations={locations} />
         </div>
       </section>
 

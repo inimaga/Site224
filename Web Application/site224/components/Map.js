@@ -3,47 +3,8 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import Link from 'next/link';
 
-function MapComponent() {
-    //Dummy locations
-    const locations = [
-        {
-            name: 'Ambassade de la Republique federale d\'Allemagne',
-            parentCategory: 'Administration',
-            category: "Embassy",
-            city: 'Conakry',
-            latitude: '9.5122736',
-            longitude: '-13.7160043',
-            verified: false,
-        },
-        {
-            name: 'Ambassade de Palestine',
-            parentCategory: 'Administration',
-            category: "Embassy",
-            city: 'Conakry',
-            latitude: '9.5118561',
-            longitude: '-13.7160678',
-            verified: false,
-        },
-        {
-            name: 'Institut Nako Diabaté',
-            parentCategory: 'Education',
-            category: "College",
-            city: 'Conakry',
-            latitude: '9.621789791',
-            longitude: '-13.58247561',
-            verified: false,
-        },
-        {
-            name: 'Bicigui',
-            parentCategory: 'Financial Services',
-            category: "Atm",
-            city: 'Conakry',
-            latitude: '9.5756926',
-            longitude: '-13.6205087',
-            verified: false,
-        }];
+function MapComponent( { locations } ) {
 
-    //const position = [9.641, -13.579];
     const position = [locations[0].latitude, locations[0].longitude];
     const icon = new Icon({
         iconUrl: '/assets/imgs/Education.svg',
@@ -59,9 +20,10 @@ function MapComponent() {
                 />
                 {locations.map((location) => (
                     <Marker
-                        key={location.id}
+                        key={location.name}
                         position={[location.latitude, location.longitude]}
-                    >
+                        //icon={icon}
+                        >
                         <Popup>
                             <Link href={''}>{location.name}</Link>
                         </Popup>

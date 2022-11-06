@@ -19,7 +19,7 @@ function DownloadComponent( {locationsData} ) {
                     </div>
                 </div>
                 <div className="bottom-0 right-0 mb-0 mr-3 lg:absolute lg:-mb-12">
-                    <img src="/assets/imgs/CTA.png" className="max-w-xs mb-4 opacity-75 md:max-w-2xl lg:max-w-lg xl:mb-0 xl:max-w-md" />
+                    <img src="/assets/imgs/CTA.png" alt="Call to action Image for data download" className="max-w-xs mb-4 opacity-75 md:max-w-2xl lg:max-w-lg xl:mb-0 xl:max-w-md" />
                 </div>
             </div>
         </section>

@@ -122,8 +122,7 @@ function LocationsListing() {
         </div>
       </section>
 
-      <DownloadComponent />
-
+      <DownloadComponent locationsData={locationsData} />
     </>
   )
 }

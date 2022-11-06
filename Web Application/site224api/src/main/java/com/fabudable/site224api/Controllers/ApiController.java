@@ -1,7 +1,4 @@
 package com.fabudable.site224api.Controllers;
-import java.util.concurrent.atomic.AtomicLong;
-
-import javax.validation.Valid;
 
 import java.util.List;
 
@@ -16,7 +13,6 @@ import com.fabudable.site224api.Interface.LocationInterface;
 public class ApiController {
 
     private static final String template = "Hello, %s! <br/>Welcome to Site224's API Endpoint :)";
-    //private final AtomicLong counter = new AtomicLong();
 
     @RequestMapping(method = RequestMethod.GET, path = "/")
     public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
@@ -32,7 +28,7 @@ public class ApiController {
                                        @RequestParam(value = "category", defaultValue = "") String category,
                                        @RequestParam(value = "page", defaultValue = "0") int pageNumber
                                        ) {
-        int resultsPerPage = 10;
+        int resultsPerPage = 5;
                                         
         if (!city.isEmpty() && !parentCategory.isEmpty() && !category.isEmpty()) {
             return locationInterface.findByCityAndParentCategoryAndCategory(city, parentCategory, category, PageRequest.of(pageNumber, resultsPerPage));
@@ -52,6 +48,33 @@ public class ApiController {
 
         return locationInterface.findAll(PageRequest.of(pageNumber, resultsPerPage)).getContent();
     }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/NumberOfLocations")
+    public int getNumberOfLocations(@RequestParam(value = "city", defaultValue = "") String city,
+                                       @RequestParam(value = "parentCategory", defaultValue = "") String parentCategory,
+                                       @RequestParam(value = "category", defaultValue = "") String category,
+                                       @RequestParam(value = "page", defaultValue = "0") int pageNumber
+                                       ) {
+                                        
+        if (!city.isEmpty() && !parentCategory.isEmpty() && !category.isEmpty()) {
+            return locationInterface.countByCityAndParentCategoryAndCategory(city, parentCategory, category);
+        } else if (!city.isEmpty() && !parentCategory.isEmpty()) {
+            return locationInterface.countByCityAndParentCategory(city, parentCategory);
+        } else if (!parentCategory.isEmpty() && !category.isEmpty()) {
+            return locationInterface.countByParentCategoryAndCategory(parentCategory, category);
+        } else if (!city.isEmpty() && !category.isEmpty()) {
+            return locationInterface.countByCityAndCategory(city, category);
+        } else if (!city.isEmpty()) {
+            return locationInterface.countByCity(city);
+        } else if (!parentCategory.isEmpty()) {
+            return locationInterface.countByParentCategory(parentCategory);
+        } else if (!category.isEmpty()) {
+            return locationInterface.countByCategory(category);
+        };
+
+        return locationInterface.findAll().size();
+    }
+
 
     //Endpoint to get locations by city
     @RequestMapping(method = RequestMethod.GET, path = "/locations/{city}")

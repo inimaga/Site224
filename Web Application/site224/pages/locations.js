@@ -1,20 +1,32 @@
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import useSWR from "swr";
+import { useState } from "react";
+import { useRouter } from 'next/router'
 
 const Map = dynamic(() => import("../components/Map"), {
   ssr: false,
 });
 
-export const getStaticProps = async () => {
-  const res = await fetch("http://localhost:8080/locations/conakry");
-  const data = await res.json();
+const fetcher = (...args) => fetch(...args).then(res => res.json());
 
-  return {
-    props: { locations: data },
-  };
-};
+function LocationsListing() {
 
-function LocationsListing( { locations } ) {
+  const router = useRouter();
+  const query = router.query;
+  const category = query.category ? query.category : '';
+
+  const [pageIndex, setPageIndex] = useState(0);
+  const { data: locationsData, error:error1 } = useSWR(`http://localhost:8080/locations?parentCategory=${category}&page=${pageIndex}`, fetcher);
+  const { data: numOfPages, error:error2 } = useSWR(`http://localhost:8080/NumberOfLocations?parentCategory=${category}`, fetcher);
+  
+  const totalPages = numOfPages ? Math.ceil(numOfPages / 5) : 0;
+
+  var previousPageButtonStatus = pageIndex > 0 ? "enabled" : "disabled";
+  var nextPageButtonStatus = pageIndex < totalPages - 1 ? "enabled" : "disabled";
+
+  if (error1) return <div>Failed to load</div>;
+  if (!locationsData) return <div>Loading...</div>;
 
   return (
     <>
@@ -39,8 +51,8 @@ function LocationsListing( { locations } ) {
       <section className="flex flex-col w-ful xl:flex-row">
         <div className="w-full xl:w-1/2 ">
 
-          {locations.map((item, index) => (
-            <div key={item.name} className="px-6 py-6 mb-6 mx-10 my-10 lg:pl-12 lg:pr-6 bg-white border border-gray-200 rounded-lg hover:shadow ease">
+          {locationsData.map((item, index) => (
+            <div key={item.name} className="px-0 py-4 mb-6 mx-10 my-10 lg:pl-8 lg:pr-4 bg-white border border-gray-200 rounded-lg hover:shadow ease">
               <div className="flex flex-col justify-between lg:flex-row">
 
                 <div className="w-full px-4 mb-4 lg:w-7/12 xl:w-8/12 lg:mb-0">
@@ -49,19 +61,19 @@ function LocationsListing( { locations } ) {
                   <ul className="flex flex-wrap text-base text-left lg:text-lg mt-6">
                     <li className="flex items-center w-full mb-4 sm:w-1/2">
 
-                      <Image className="mr-2" src="/assets/imgs/Category.svg" width={30} height={30} alt="Category" />
+                      <Image className="mr-2" src="/assets/imgs/Category.svg" width={20} height={20} alt="Category" />
                       <p className="font-normal">{item.parentCategory}</p>
                     </li>
                     <li className="flex items-center w-full mb-4 sm:w-1/2">
-                      <Image className="mr-2" src="/assets/imgs/Type.svg" width={30} height={30} alt="Type" />
+                      <Image className="mr-2" src="/assets/imgs/Type.svg" width={20} height={20} alt="Type" />
                       <p className="font-normal">{item.category}</p>
                     </li>
                     <li className="flex items-center w-full mb-4 sm:w-1/2">
-                      <Image className="mr-2" src="/assets/imgs/location.svg" width={30} height={30} alt="Location" />
+                      <Image className="mr-2" src="/assets/imgs/location.svg" width={20} height={20} alt="Location" />
                       <p className="font-normal">{item.city}</p>
                     </li>
                     <li className="flex items-center w-full mb-4 sm:w-1/2">
-                      <p className="font-normal text-gray-600">Location verified? : {item.verified ? "True" : "False"} </p>
+                      <p className="font-normal text-gray-600">Verified? : {item.verified ? "True" : "False"} </p>
                     </li>
                   </ul>
                 </div>
@@ -73,14 +85,23 @@ function LocationsListing( { locations } ) {
             </div>
 
           ))}
+
+          <section>
+            <h2 className="text-center">- Page {pageIndex + 1} of {totalPages} -</h2>
+
+            <nav role="navigation">
+              <ul class="cd-pagination">
+                <li class={`button ${previousPageButtonStatus}`} onClick={function () { if (pageIndex > 0) setPageIndex(pageIndex - 1) }}>Prev</li>
+                <li class={`button ${nextPageButtonStatus}`} onClick={function () { if (pageIndex < totalPages - 1) setPageIndex(pageIndex + 1) }}>Next</li>
+              </ul>
+            </nav>
+          </section>
         </div>
 
         <div className="w-full xl:w-1/2 bg-slate-300">
-          <Map locations={locations} />
+          <Map locations={locationsData} />
         </div>
       </section>
-
-
 
     </>
   )

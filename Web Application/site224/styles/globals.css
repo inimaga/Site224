@@ -1,3 +1,58 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* Styling for pagination */
+
+.cd-pagination {
+    width: 90%;
+    max-width: 768px;
+    margin: 2em auto 4em;
+    text-align: center;
+  }
+  .cd-pagination li {
+    /* hide numbers on small devices */
+    display: none;
+    margin: 0 .2em;
+    border: 1px solid #e6e6e6;
+    border-radius: 0.25em;
+  }
+  .cd-pagination li.button {
+    /* make sure prev next buttons are visible */
+    display: inline-block;
+  }
+  .cd-pagination li, .cd-pagination span {
+    display: inline-block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* use padding and font-size to change buttons size */
+    padding: .6em .8em;
+  }
+  .no-touch .cd-pagination li:hover {
+    background-color: #f2f2f2;
+  }
+  .cd-pagination li:active {
+    /* click effect */
+    -webkit-transform: scale(0.9);
+    -moz-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    -o-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  .cd-pagination li.disabled {
+    /* button disabled */
+    color: rgba(46, 64, 87, 0.4);
+    pointer-events: none;
+  }
+  .cd-pagination a.disabled::before, .cd-pagination a.disabled::after {
+    opacity: .4;
+  }
+  .cd-pagination .button:first-of-type:before {
+    content: '\00ab  ';
+  }
+  .cd-pagination .button:last-of-type:after {
+    content: ' \00bb';
+  }

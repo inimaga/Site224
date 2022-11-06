@@ -13,7 +13,7 @@ function MapComponent( { locations } ) {
 
     return (
         <div className="w-full h-full">
-            <MapContainer center={position} zoom={12} className="w-full h-full">
+            <MapContainer center={position} zoom={15} className="w-full h-full">
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

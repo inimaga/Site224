@@ -3,6 +3,8 @@ import dynamic from "next/dynamic";
 import useSWR from "swr";
 import { useState } from "react";
 import { useRouter } from 'next/router';
+import NoResults from "../components/NoResults";
+import DownloadComponent from "../components/Download";
 
 const Map = dynamic(() => import("../components/Map"), {
   ssr: false,
@@ -15,10 +17,11 @@ function LocationsListing() {
   const router = useRouter();
   const query = router.query;
   const category = query.category ? query.category : '';
+  const city = query.city ? query.city : '';
 
   const [pageIndex, setPageIndex] = useState(0);
-  const { data: locationsData, error:error1 } = useSWR(`http://localhost:8080/locations?parentCategory=${category}&page=${pageIndex}`, fetcher);
-  const { data: numOfPages, error:error2 } = useSWR(`http://localhost:8080/NumberOfLocations?parentCategory=${category}`, fetcher);
+  const { data: locationsData, error:error1 } = useSWR(`http://localhost:8080/locations?parentCategory=${category}&city=${city}&page=${pageIndex}`, fetcher);
+  const { data: numOfPages, error:error2 } = useSWR(`http://localhost:8080/NumberOfLocations?parentCategory=${category}&city=${city}`, fetcher);
   
   const totalPages = numOfPages ? Math.ceil(numOfPages / 5) : 0;
 
@@ -27,6 +30,12 @@ function LocationsListing() {
 
   if (error1) return <div>Failed to load</div>;
   if (!locationsData) return <div>Loading...</div>;
+
+  if (totalPages === 0) {
+    return (
+       <NoResults />
+    );
+  }
 
   return (
     <>
@@ -102,6 +111,8 @@ function LocationsListing() {
           <Map locations={locationsData} />
         </div>
       </section>
+
+      <DownloadComponent />
 
     </>
   )

@@ -2,7 +2,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import useSWR from "swr";
 import { useState } from "react";
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 
 const Map = dynamic(() => import("../components/Map"), {
   ssr: false,
@@ -90,9 +90,9 @@ function LocationsListing() {
             <h2 className="text-center">- Page {pageIndex + 1} of {totalPages} -</h2>
 
             <nav role="navigation">
-              <ul class="cd-pagination">
-                <li class={`button ${previousPageButtonStatus}`} onClick={function () { if (pageIndex > 0) setPageIndex(pageIndex - 1) }}>Prev</li>
-                <li class={`button ${nextPageButtonStatus}`} onClick={function () { if (pageIndex < totalPages - 1) setPageIndex(pageIndex + 1) }}>Next</li>
+              <ul className="cd-pagination">
+                <li className={`button ${previousPageButtonStatus}`} onClick={function () { if (pageIndex > 0) setPageIndex(pageIndex - 1) }}>Prev</li>
+                <li className={`button ${nextPageButtonStatus}`} onClick={function () { if (pageIndex < totalPages - 1) setPageIndex(pageIndex + 1) }}>Next</li>
               </ul>
             </nav>
           </section>

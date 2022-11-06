@@ -15,10 +15,10 @@ function FAQ() {
                     </div>
                     <div>
                         <h5 className="mt-10 mb-3 font-semibold text-gray-900">How was the site built?</h5>
-                        <p>Standing on the shoulder of giants. Using free and opensource technologies. See <Link href={"https://github.com/inimaga/Site224"} target="_blank" class="hover:text-blue-500 underline">GitHub repo</Link> for more information.</p>
+                        <p>Standing on the shoulder of giants. Using free and opensource technologies. See <Link href={"https://github.com/inimaga/Site224"} target="_blank" className="hover:text-blue-500 underline">GitHub repo</Link> for more information.</p>
 
                         <h5 className="mt-10 mb-3 font-semibold text-gray-900">Any future plans?</h5>
-                        <p>This will depend on site usage and feature requests. If you have any suggestions, feel free to <Link href={"https://issanimaga.com/contact/"} class="hover:text-blue-500 underline">contact me</Link></p>
+                        <p>This will depend on site usage and feature requests. If you have any suggestions, feel free to <Link href={"https://issanimaga.com/contact/"} className="hover:text-blue-500 underline">contact me</Link></p>
                     </div>
                 </div>
             </div>

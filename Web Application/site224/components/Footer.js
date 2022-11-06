@@ -21,7 +21,7 @@ function Footer() {
                     </div>
                     <div className="pt-4 mt-4 leading-7 text-center text-gray-600 border-t border-gray-200 md:mt-5 md:pt-5">
                         <p className="box-border mt-0 text-sm border-0 border-solid">
-                            Built with ❤️ by <a href="https://issanimaga.com" rel="noreferrer" target="_blank" class="hover:text-indigo-600 underline">Issa Nimaga</a> | © 2022
+                            Built with ❤️ by <a href="https://issanimaga.com" rel="noreferrer" target="_blank" className="hover:text-indigo-600 underline">Issa Nimaga</a> | © 2022
                         </p>
                     </div>
                 </div>

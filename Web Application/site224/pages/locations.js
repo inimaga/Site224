@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from 'next/router';
 import NoResults from "../components/NoResults";
 import DownloadComponent from "../components/Download";
+import Link from "next/link";
 
 const Map = dynamic(() => import("../components/Map"), {
   ssr: false,
@@ -20,9 +21,9 @@ function LocationsListing() {
   const city = query.city ? query.city : '';
 
   const [pageIndex, setPageIndex] = useState(0);
-  const { data: locationsData, error:error1 } = useSWR(`http://localhost:8080/locations?parentCategory=${category}&city=${city}&page=${pageIndex}`, fetcher);
-  const { data: numOfPages, error:error2 } = useSWR(`http://localhost:8080/NumberOfLocations?parentCategory=${category}&city=${city}`, fetcher);
-  
+  const { data: locationsData, error: error1 } = useSWR(`http://localhost:8080/locations?parentCategory=${category}&city=${city}&page=${pageIndex}`, fetcher);
+  const { data: numOfPages, error: error2 } = useSWR(`http://localhost:8080/NumberOfLocations?parentCategory=${category}&city=${city}`, fetcher);
+
   const totalPages = numOfPages ? Math.ceil(numOfPages / 5) : 0;
 
   var previousPageButtonStatus = pageIndex > 0 ? "enabled" : "disabled";
@@ -33,16 +34,25 @@ function LocationsListing() {
 
   if (totalPages === 0) {
     return (
-       <NoResults />
+      <NoResults />
     );
   }
 
   return (
     <>
       <section className="relative" style={{ backgroundImage: `url('/assets/imgs/GN_Header_Image.jpg')`, backgroundSize: "cover" }}>
+
+        <div class="relative z-50 w-full h-24  bg-transparent">
+          <div class="container flex items-center justify-center h-full max-w-6xl px-8 mx-auto sm:justify-between xl:px-0">
+            <div class="absolute left-0 flex-col items-center justify-center hidden w-full pb-8 mt-48 border-b border-gray-200 md:relative md:w-auto md:bg-transparent md:border-none md:mt-0 md:flex-row md:p-0 md:items-end md:flex md:justify-between">
+              <Link href="/" class="relative z-40 inline-block w-auto h-full px-5 py-3 text-normal font-bold leading-none text-white transition duration-300 bg-indigo-600 rounded shadow-md fold-bold sm:w-full lg:shadow-none hover:shadow-xl">🏠 Home</Link>
+            </div>
+          </div>
+        </div>
+
         <div className="absolute inset-0 bg-gradient-to-b from-black to-[indigo] opacity-60"></div>
 
-        <div className="relative z-20 px-4 py-24 mx-auto text-center text-white max-w-7xl lg:py-32">
+        <div className="relative z-20 px-4 py-16 mx-auto text-center text-white max-w-7xl lg:py-16">
           <div className="flex flex-wrap text-white">
             <div className="relative w-full px-4 mx-auto text-center xl:flex-grow-0 xl:flex-shrink-0">
 

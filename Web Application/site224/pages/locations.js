@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import NoResults from "../components/NoResults";
 import DownloadComponent from "../components/Download";
 import Link from "next/link";
+import APIErrorFeedback from "../components/APIErrorFeedback";
 
 const Map = dynamic(() => import("../components/Map"), {
   ssr: false,
@@ -24,19 +25,16 @@ function LocationsListing() {
   const { data: locationsData, error: error1 } = useSWR(`${process.env.API_Endpoint}/locations?parentCategory=${category}&city=${city}&page=${pageIndex}`, fetcher);
   const { data: numOfPages, error: error2 } = useSWR(`${process.env.API_Endpoint}/NumberOfLocations?parentCategory=${category}&city=${city}`, fetcher);
 
-  const totalPages = numOfPages ? Math.ceil(numOfPages / 5) : 0;
 
+
+  if (error1) return <APIErrorFeedback />;
+  if (!locationsData) return <h1 className="flex flex-col py-40 bg-white items-center justify-center w-full h-full text-2xl font-bold">Loading...</h1>;
+
+  const totalPages = numOfPages ? Math.ceil(numOfPages / 5) : 0;
   var previousPageButtonStatus = pageIndex > 0 ? "enabled" : "disabled";
   var nextPageButtonStatus = pageIndex < totalPages - 1 ? "enabled" : "disabled";
 
-  if (error1) return <div>Failed to load</div>;
-  if (!locationsData) return <div>Loading...</div>;
-
-  if (totalPages === 0) {
-    return (
-      <NoResults />
-    );
-  }
+  if (locationsData.length === 0) return <NoResults />;
 
   return (
     <>

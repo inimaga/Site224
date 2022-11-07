@@ -29,6 +29,7 @@ public class ApiController {
                                        @RequestParam(value = "page", defaultValue = "0") int pageNumber
                                        ) {
         int resultsPerPage = 5;
+        pageNumber = Math.abs(pageNumber);
                                         
         if (!city.isEmpty() && !parentCategory.isEmpty() && !category.isEmpty()) {
             return locationInterface.findByCityAndParentCategoryAndCategory(city, parentCategory, category, PageRequest.of(pageNumber, resultsPerPage));
@@ -52,8 +53,7 @@ public class ApiController {
     @RequestMapping(method = RequestMethod.GET, path = "/NumberOfLocations")
     public int getNumberOfLocations(@RequestParam(value = "city", defaultValue = "") String city,
                                        @RequestParam(value = "parentCategory", defaultValue = "") String parentCategory,
-                                       @RequestParam(value = "category", defaultValue = "") String category,
-                                       @RequestParam(value = "page", defaultValue = "0") int pageNumber
+                                       @RequestParam(value = "category", defaultValue = "") String category
                                        ) {
                                         
         if (!city.isEmpty() && !parentCategory.isEmpty() && !category.isEmpty()) {

@@ -82,7 +82,7 @@ function LocationsListing() {
                       <p className="font-normal">{item.parentCategory}</p>
                     </li>
                     <li className="flex items-center w-full mb-4 sm:w-1/2">
-                      <Image className="mr-2" src="/assets/imgs/Type.svg" width={20} height={20} alt="Type" />
+                      <Image className="mr-2" src="/assets/imgs/Type2.svg" width={20} height={20} alt="Type" />
                       <p className="font-normal">{item.category}</p>
                     </li>
                     <li className="flex items-center w-full mb-4 sm:w-1/2">

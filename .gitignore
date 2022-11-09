@@ -72,3 +72,4 @@ next-env.d.ts
 
 Data Pipeline/Input/OpenStreetMap Data/
 *.properties
+Data Pipeline/Output/

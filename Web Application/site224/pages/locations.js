@@ -24,6 +24,7 @@ function LocationsListing() {
   const [pageIndex, setPageIndex] = useState(0);
   const { data: locationsData, error: error1 } = useSWR(`${process.env.API_Endpoint}/locations?parentCategory=${category}&city=${city}&page=${pageIndex}`, fetcher);
   const { data: numOfPages, error: error2 } = useSWR(`${process.env.API_Endpoint}/NumberOfLocations?parentCategory=${category}&city=${city}`, fetcher);
+  const { data: downloadData, error: error3 } = useSWR(`${process.env.API_Endpoint}/locationsAll?parentCategory=${category}&city=${city}`, fetcher); //Not a good idea to make this call, but quick fix for now. In the future, to make just one call, and compute pagination from it.
 
 
 
@@ -120,7 +121,7 @@ function LocationsListing() {
         </div>
       </section>
 
-      <DownloadComponent locationsData={locationsData} />
+      <DownloadComponent locationsData={downloadData} />
     </>
   )
 }

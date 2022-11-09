@@ -21,12 +21,11 @@ The project is comprised of 3 parts:
 
 	This particular choice of stack is due to its ubiquity across organisations today.
 
-3. The third part is **DevOps**. This involves building a dockerized file to facilitate deployment of the WebApp built in Step 2, to cloud platforms such as AWS, GCP or Azure.
+3. The third part is **DevOps**. This involves building a docker file and docker image to facilitate deployment of the WebApp built in Step 2, to cloud providers such as AWS, GCP or Azure.
 
 ### Timeline
 - Entire project to be built in a couple of evenings over the span of a week.
-- Self-imposed deadline: Week ending 13th November 
-
+- ~~Self-imposed deadline: Week ending 13th November~~ ✅ (Completed)
 
 ____
 
@@ -89,9 +88,18 @@ response = requests.get('https://api.site224.com/locationsAll', params=params, h
 
 ### Deploying the Webapp via Docker
 
-Please note that these instructions only cover deployment of the front-end web app.
+*Please note that the below only covers the front-end web app.*
 
-[TO DO]
+The dockerfile from which the docker image for the front-end web-app is built, can be found within the webapp's corresponding directory at:
+
+```
+Root 
+└── Web Application
+    └── site224
+```
+Alternatively, you can find a copy of the built image on [DockerHub (Link)](https://hub.docker.com/r/inimaga/site224).
+
+Using the image on DockerHub, deploying to a VPS provider such as Linode or DigitalOcean, or to a major cloud service such as AWS, Azure or GCP should be relatively trivial.
 
 
 ## Copyright / License

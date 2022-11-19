@@ -29,7 +29,7 @@ function LocationsListing() {
 
 
   if (error1) return <APIErrorFeedback />;
-  if (!locationsData) return <h1 className="flex flex-col py-40 bg-white items-center justify-center w-full h-full text-2xl font-bold">Loading...</h1>;
+  if (!locationsData || !downloadData) return <h1 className="flex flex-col py-40 bg-white items-center justify-center w-full h-full text-2xl font-bold">Loading...</h1>;
 
   const totalPages = numOfPages ? Math.ceil(numOfPages / 5) : 0;
   var previousPageButtonStatus = pageIndex > 0 ? "enabled" : "disabled";
